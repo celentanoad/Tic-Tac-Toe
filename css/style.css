@@ -3,6 +3,9 @@ body {
     display: flex;
     flex-direction: column;
     text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background: rgb(253,187,45);
+    background: linear-gradient(0deg, rgba(253,187,45,1) 0%, rgba(34,193,195,1) 100%);
 }
 
 section.board {
@@ -10,7 +13,9 @@ section.board {
     grid-template-rows: repeat(3, 10vmin);
     grid-template-columns: repeat(3, 10vmin);
     grid-gap: 0vmin;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
     
 }
 
@@ -19,4 +24,29 @@ div {
     font-size: 8vmin;
     text-align: center;
     vertical-align: middle;
+    color: #1ea9ab;
+    text-shadow: 3px 2px 2px #fdbb2d;
+}
+
+h1 {
+    font-size: 6vmin;
+    color: #fdbb2d;
+}
+
+
+h2 {
+
+
+}
+
+button {
+    outline: none;
+    background-color: rgba(0,0,0,0);
+    border: 1px solid black;
+    border-radius: 2vmin;
+    display: inline-block;
+    position: relative;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
 }

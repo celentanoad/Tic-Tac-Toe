@@ -21,6 +21,7 @@ let winner;
 /*------Cached Element References------*/
 
 // You might choose to put your game status here
+const replayEl = document.querySelector("button");
 const messageEl = document.getElementById("message");
 let squares = {
     square0: document.getElementById("0"),
@@ -36,14 +37,12 @@ let squares = {
 
 
 /*------Event Listeners------*/
-// document.querySelectorAll(".board").addEventListener("click", whenClicked);
-// squareEl.addEventListener("click", squareClick);
 // This is where you should put the event listener
 // for a mouse-click
 
 // squares.addEventListener("click", squareClick);
 document.querySelector("section.board").addEventListener("click", squareClick);
-
+replayEl.addEventListener("click", replay);
 /*------Functions------*/
 
 init(); 
@@ -126,4 +125,8 @@ function renderMessage() {
     //possibly use a switch statement? Do some research first
     
     
+}
+
+function replay() {
+    init();
 }
