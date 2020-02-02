@@ -41,6 +41,9 @@ let squares = {
 // This is where you should put the event listener
 // for a mouse-click
 
+// squares.addEventListener("click", squareClick);
+document.querySelector("section.board").addEventListener("click", squareClick);
+
 /*------Functions------*/
 
 init(); 
@@ -51,7 +54,7 @@ init();
 // what the board will look like upon loading
 
 function init() {
-    board = [null, null, null, null, null, null, null, null, null];
+    board = [];
     turn = 1;
     winner = null;
     render();
@@ -64,17 +67,24 @@ function init() {
 // is clicked
 
 function squareClick(event) {
-   
-    let selection = this;
-    if (selection.tagName !== "div" || checkWinner() || turn === -1)
-    return;
-    selection.textContent = "X";
-    console.log(selection);
-    playerOneMoves.push(selection);
-    //how to make selection = to id??
-    turn = -1;
+    let clickedSquare = event.target.id;
+    
+        clickedSquare.textContent = "x";
+    }
+    turn *= -1;
     render();
+
+    console.log(clickedSquare);
 }
+    
+//     let selection = this;
+//     if (selection.tagName !== "div") return;
+//     selection.textContent = "X";
+//     console.log(selection);
+//     //how to make selection = to id??
+//     turn = turn * -1
+//     render();
+// }
 
 // Check winner function:
 // Checks the current state of the board for
@@ -93,11 +103,9 @@ function checkWinner() {
     
 function render() {
 //iterate through square obj to make each square = specific board index
-        board.forEach(function(square) {
-            
-        });
-    
-    console.log(board);
+    for (let key in squares) {
+        board.push(key);
+    }        
 
     renderMessage();
 }
@@ -110,22 +118,23 @@ function renderMessage() {
         if (turn === -1) {
             messageEl.textContent = "Your turn, Player Two";
         }
+        if (turn === 0) {
+            messageEl.textContent = "Let's play Tic-Tac-Toe!";
+        }
     }
 
-    else if (winner === 1) {
+    if (winner === 1) {
         messageEl.textContent = "Congratulations, Player 1! You Win!";
     }
-    else if (winner === -1) {
+    if (winner === -1) {
         messageEl.textContent = "Congratulations, Player 2! You Win!";
     }
 
-    else if (winner === "T") {
+    if (winner === "T") {
         messageEl.textContent = "Draw!";
     }
     //include conditionals to change message based on turn
     //possibly use a switch statement? Do some research first
-    else {
-        messageEl.textContent = "Let's play Tic Tac Toe!";
-    }
+    
     
 }
