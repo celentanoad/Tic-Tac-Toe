@@ -23,15 +23,15 @@ let winner;
 // You might choose to put your game status here
 const messageEl = document.getElementById("message");
 let squares = {
-    square0: document.getElementById("sq0"),
-    square1: document.getElementById("sq1"),
-    square2: document.getElementById("sq2"),
-    square3: document.getElementById("sq3"),
-    square4: document.getElementById("sq4"),
-    square5: document.getElementById("sq5"),
-    square6: document.getElementById("sq6"),
-    square7: document.getElementById("sq7"),
-    square8: document.getElementById("sq8"),
+    square0: document.getElementById("0"),
+    square1: document.getElementById("1"),
+    square2: document.getElementById("2"),
+    square3: document.getElementById("3"),
+    square4: document.getElementById("4"),
+    square5: document.getElementById("5"),
+    square6: document.getElementById("6"),
+    square7: document.getElementById("7"),
+    square8: document.getElementById("8"),
 }
 
 
@@ -54,7 +54,7 @@ init();
 // what the board will look like upon loading
 
 function init() {
-    board = [];
+    board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     turn = 1;
     winner = null;
     render();
@@ -67,24 +67,12 @@ function init() {
 // is clicked
 
 function squareClick(event) {
-    let clickedSquare = event.target.id;
-    
-        clickedSquare.textContent = "x";
-    }
+    let clickedSquare = parseInt(event.target.id);
+    if (board[clickedSquare] !== 0) return;
+    board.splice(clickedSquare, 1, turn);
     turn *= -1;
     render();
-
-    console.log(clickedSquare);
 }
-    
-//     let selection = this;
-//     if (selection.tagName !== "div") return;
-//     selection.textContent = "X";
-//     console.log(selection);
-//     //how to make selection = to id??
-//     turn = turn * -1
-//     render();
-// }
 
 // Check winner function:
 // Checks the current state of the board for
@@ -102,11 +90,14 @@ function checkWinner() {
     // either X or O depending on whose turn it is
     
 function render() {
-//iterate through square obj to make each square = specific board index
-    for (let key in squares) {
-        board.push(key);
-    }        
-
+    for (let i = 0; i < board.length; i++) {
+        if (board[i] === 1) {
+            document.getElementById(i).textContent = "X";
+        }
+        if (board[i] === -1) {
+            document.getElementById(i).textContent = "O";
+        }
+    }
     renderMessage();
 }
     
@@ -118,9 +109,7 @@ function renderMessage() {
         if (turn === -1) {
             messageEl.textContent = "Your turn, Player Two";
         }
-        if (turn === 0) {
-            messageEl.textContent = "Let's play Tic-Tac-Toe!";
-        }
+        
     }
 
     if (winner === 1) {
