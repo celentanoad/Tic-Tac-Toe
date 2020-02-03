@@ -2,11 +2,6 @@
 /*------Constants------*/
 
 const WIN_CONDITIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 4, 8], [2, 4, 6], [0, 3, 6], [1, 4, 7], [2, 5, 8]];
-const colors = {
-    "1": "red",
-    "-1": "blue",
-    "null": "white",
-}
 
 /*------Variables (state)------*/
 
@@ -15,8 +10,6 @@ const colors = {
 let board;
 let turn;
 let winner;
-
-
 
 /*------Cached Element References------*/
 
@@ -40,7 +33,6 @@ let squares = {
 // This is where you should put the event listener
 // for a mouse-click
 
-// squares.addEventListener("click", squareClick);
 document.querySelector("section.board").addEventListener("click", squareClick);
 replayEl.addEventListener("click", replay);
 /*------Functions------*/
@@ -57,6 +49,7 @@ function init() {
     turn = 1;
     winner = null;
     render();
+
 }
 
 
@@ -67,9 +60,10 @@ function init() {
 
 function squareClick(event) {
     let clickedSquare = parseInt(event.target.id);
-    if (board[clickedSquare] !== 0) return;
+    if (board[clickedSquare] !== 0 || isGameOver()) return;
     board.splice(clickedSquare, 1, turn);
     turn *= -1;
+    winner = checkWinner();
     render();
 }
 
@@ -79,10 +73,19 @@ function squareClick(event) {
 // variable if so
 
 function checkWinner() {
-        
+        //iterate through board, create array for Xs and array for Os.
+        //check both arrays in WIN_CONDITIONS and see if there's a match
+    for (let i = 0; i < WIN_CONDITIONS.length; i++) {
+        if (Math.abs(board[WIN_CONDITIONS[i][0]] + board[WIN_CONDITIONS[i][1]] + board[WIN_CONDITIONS[i][2]]) === 3) return board[WIN_CONDITIONS[i][0]];
+    }
+    if (board.includes(0)) return null;
+    return "T";
+}
+
+function isGameOver() {
+    if (winner !== null) return true;
     
 }
-    
     // Render function:
     // Displays the current state of the board
     // on the page, updating the elements to reflect
@@ -96,31 +99,27 @@ function render() {
         if (board[i] === -1) {
             document.getElementById(i).textContent = "O";
         }
+        if (board[i] === 0) {
+            document.getElementById(i).textContent = "";
+        }
     }
+    replayEl.style.visibility = isGameOver() ? "visible" : "hidden";
     renderMessage();
 }
     
 function renderMessage() {
     if (winner === null) {
-        if (turn === 1) {
-            messageEl.textContent = "Your turn, Player One";
-        } //switch this to a ternary statement!
-        if (turn === -1) {
-            messageEl.textContent = "Your turn, Player Two";
-        }
+        turn === 1 ?  messageEl.textContent = "Your turn, Player One" : messageEl.textContent = "Your turn, Player Two";
         
     }
 
-    if (winner === 1) {
-        messageEl.textContent = "Congratulations, Player 1! You Win!";
+    if (winner !== null) {
+        return winner === 1 ? messageEl.textContent = "Congratulations, Player 1! You Win!"
+        : winner === -1 ? messageEl.textContent = "Congratulations, Player 2! You Win!"
+        : messageEl.textContent = "Draw!";
     }
-    if (winner === -1) {
-        messageEl.textContent = "Congratulations, Player 2! You Win!";
-    }
-
-    if (winner === "T") {
-        messageEl.textContent = "Draw!";
-    }
+    
+  
     //include conditionals to change message based on turn
     //possibly use a switch statement? Do some research first
     
