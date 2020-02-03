@@ -10,6 +10,8 @@ const WIN_CONDITIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 4, 8], [2, 4, 6], [
 let board;
 let turn;
 let winner;
+let playerOneWins = 0
+let playerTwoWins = 0
 
 /*------Cached Element References------*/
 
@@ -82,7 +84,17 @@ function checkWinner() {
     return "T";
 }
 
+function trackWins() {
+    if (winner === 1) {
+        playerOneWins += 1;
+    }
+    if (winner === -1) {
+        playerTwoWins += 1;
+    }
+}
+
 function isGameOver() {
+    trackWins();
     if (winner !== null) return true;
     
 }
@@ -118,8 +130,9 @@ function renderMessage() {
         : winner === -1 ? messageEl.textContent = "Congratulations, Player 2! You Win!"
         : messageEl.textContent = "Draw!";
     }
-    
-  
+    document.getElementById("scorep1").textContent = playerOneWins;
+    document.getElementById("scorep2").textContent = playerTwoWins; 
+
     //include conditionals to change message based on turn
     //possibly use a switch statement? Do some research first
     
